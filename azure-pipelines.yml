@@ -16,3 +16,13 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: dotnet build $(buildConfiguration)
   
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)'
+    Contents: '**/zip'
+    TargetFolder: '$(build.artifactsstagingdirectory)'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
